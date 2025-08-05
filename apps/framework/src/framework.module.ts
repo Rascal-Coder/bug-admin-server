@@ -29,10 +29,6 @@ import { AsyncLocalStorageInterceptor } from './interceptor/AsyncLocalStorageInt
       provide: 'Logger',
       useClass: CustomLogger,
     },
-    // {
-    //   provide: APP_INTERCEPTOR,
-    //   useClass: DateFormatInterceptor,
-    // },
     TypeOrmOperateEventListener,
   ],
   exports: [TypeORMDefault],

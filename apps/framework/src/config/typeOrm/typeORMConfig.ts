@@ -1,13 +1,14 @@
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'node:path';
-import * as config from 'config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { getConfig } from 'apps/common/src/utils/Config';
 
 const entitiesPaths = [
   join(__dirname, '..', '..', '..', '..', '**', '*.entity.{ts,js}'),
 ];
-console.log('entitiesPaths: ', entitiesPaths);
-const typeOrmConfig = config.get('typeOrm') as any;
+
+const { MYSQL_CONFIG } = getConfig();
+
 export default TypeOrmModule.forRoot({
-  ...typeOrmConfig,
+  ...MYSQL_CONFIG,
   entities: entitiesPaths,
 });

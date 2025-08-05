@@ -1,0 +1,69 @@
+version: '3.8'
+
+x-config: &config
+  # 这里会通过环境变量注入配置
+  db_host: ${DB_HOST:-localhost}
+  db_port: ${DB_PORT:-3306}
+  db_username: ${DB_USERNAME:-root}
+  db_password: ${DB_PASSWORD:-root}
+  db_database: ${DB_DATABASE:-bug-admin}
+  redis_host: ${REDIS_HOST:-localhost}
+  redis_port: ${REDIS_PORT:-6379}
+  redis_password: ${REDIS_PASSWORD:-root}
+  app_port: ${APP_PORT:-8001}
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: nest-admin-mysql
+    restart: always
+    environment:
+      - MYSQL_HOST=${DB_HOST:-localhost}
+      - MYSQL_PORT=${DB_PORT:-3306}
+      - MYSQL_DATABASE=${DB_DATABASE:-bug-admin}
+      - MYSQL_USERNAME=${DB_USERNAME:-root}
+      - MYSQL_PASSWORD=${DB_PASSWORD:-root}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-root}
+    ports:
+      - '${DB_PORT:-3306}:3306'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    volumes:
+      - ./__data/mysql/:/var/lib/mysql/
+      - ./deploy/sql/:/docker-entrypoint-initdb.d/
+    networks:
+      - bug_admin_net
+
+  redis:
+    image: redis:alpine
+    container_name: nest-admin-redis
+    restart: always
+    ports:
+      - '${REDIS_PORT:-6379}:6379'
+    command: >
+      --requirepass ${REDIS_PASSWORD:-root}
+    networks:
+      - bug_admin_net
+
+  nest-admin-server:
+    build:
+      context: .
+      args:
+        - PROJECT_DIR=${PROJECT_DIR:-/app}
+    image: buqiyuan/nest-admin-server:stable
+    container_name: nest-admin-server
+    restart: always
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - '${APP_PORT:-8001}:${APP_PORT:-8001}'
+    volumes:
+      - ./logs/:${PROJECT_DIR:-/app}/logs/
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - bug_admin_net
+
+networks:
+  bug_admin_net:
+    name: bug_admin_net

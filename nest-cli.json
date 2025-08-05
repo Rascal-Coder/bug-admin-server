@@ -1,22 +1,22 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/bug-admin-server/src",
+  "sourceRoot": "apps/app/src",
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/bug-admin-server/tsconfig.app.json"
+    "tsConfigPath": "apps/app/tsconfig.app.json"
   },
   "monorepo": true,
-  "root": "apps/bug-admin-server",
+  "root": "apps/app",
   "projects": {
-    "bug-admin-server": {
+    "app": {
       "type": "application",
-      "root": "apps/bug-admin-server",
+      "root": "apps/app",
       "entryFile": "main",
-      "sourceRoot": "apps/bug-admin-server/src",
+      "sourceRoot": "apps/app/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/bug-admin-server/tsconfig.app.json"
+        "tsConfigPath": "apps/app/tsconfig.app.json"
       }
     },
     "common": {

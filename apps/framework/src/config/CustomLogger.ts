@@ -22,7 +22,7 @@ export class CustomLogger implements LoggerService {
               const contextId = store?.get('contextId') || +new Date();
               const contextStr = chalk.yellow(`[${contextId}]`);
               const time = new ConvertDate(new Date()).toISOString();
-              return `${appStr} ${time} ${level} ${contextStr} ${message} `;
+              return `${appStr} ${time} ${String(level)} ${contextStr} ${String(message)} `;
             }),
           ),
         }),
