@@ -1,0 +1,33 @@
+{
+  "server": {
+    "port": 8081
+  },
+  "redis": {
+    "host": "127.0.0.1",
+    "port": 6379,
+    "password": "",
+    "db": 0
+  },
+  "typeOrm": {
+    "type": "mysql",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "username": "root",
+    "password": "*****",
+    "database": "bug-admin",
+    "synchronize": false,
+    "logging": true,
+    "connectorPackage": "mysql2",
+    "extra": {
+      "connectionLimit": 10, 
+      "acquireTimeout": 10000, 
+      "waitForConnections": true, 
+      "queueLimit": 0, 
+      "idleTimeout": 60000, 
+      "connectTimeout": 30000 
+    },
+    "keepConnectionAlive": true,
+    "retryDelay": 3000,
+    "retryAttempts": 10 
+  }
+}
