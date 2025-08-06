@@ -6,8 +6,9 @@ import { GlobalErrorFilter } from './error/GlobalErrorFilter';
 import { CustomLogger } from './config/CustomLogger';
 import { TypeOrmOperateEventListener } from './config/typeOrm/TypeOrmOperateEventListener';
 import { AsyncLocalStorageInterceptor } from './interceptor/AsyncLocalStorageInterceptor';
+import I18nConfig from './config/I18nConfig';
 @Module({
-  imports: [TypeORMDefault, RedisDefault],
+  imports: [TypeORMDefault, RedisDefault, I18nConfig],
   controllers: [],
   providers: [
     {

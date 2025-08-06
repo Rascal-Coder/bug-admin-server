@@ -6,8 +6,7 @@ import { env, envBoolean, envNumber } from 'apps/common/src/utils/Env';
 const entitiesPaths = [
   join(__dirname, '..', '..', '..', '..', '**', '*.entity.{ts,js}'),
 ];
-
-// const { MYSQL_CONFIG } = getConfig();
+console.log('DB_HOST==========================>', env('DB_HOST'));
 
 export default TypeOrmModule.forRoot({
   // ...MYSQL_CONFIG,
