@@ -7,6 +7,9 @@ import { CustomLogger } from './config/CustomLogger';
 import { TypeOrmOperateEventListener } from './config/typeOrm/TypeOrmOperateEventListener';
 import { AsyncLocalStorageInterceptor } from './interceptor/AsyncLocalStorageInterceptor';
 import I18nConfig from './config/I18nConfig';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: `.env.${process.env.RUNNING_ENV}` });
 @Module({
   imports: [TypeORMDefault, RedisDefault, I18nConfig],
   controllers: [],

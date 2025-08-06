@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "postinstall": "npm run gen-env-types",
     "build": "nest build",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "dev": "npm run start:dev",
@@ -19,9 +20,10 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/app/test/jest-e2e.json",
-    "copyI18nAssets": "node scripts/copyI18nAssets.js",
     "docker:build:dev": "docker compose -f docker-compose.dev.yml --env-file .env --env-file .env.development up --build",
-    "docker:build": "docker compose -f docker-compose.prod.yml --env-file .env --env-file .env.production up --build"
+    "docker:build": "docker compose -f docker-compose.prod.yml --env-file .env --env-file .env.production up --build",
+    "copy-i18n-assets": "npx tsx scripts/copyI18nAssets.ts || true",
+    "gen-env-types": "npx tsx scripts/genEnvTypes.ts || true"
   },
   "dependencies": {
     "@nestjs-modules/ioredis": "^2.0.2",
@@ -35,11 +37,13 @@
     "config": "^4.1.0",
     "cross-env": "^10.0.0",
     "dayjs": "^1.11.13",
+    "dotenv": "^17.2.1",
     "ioredis": "^5.7.0",
     "mysql2": "^3.14.3",
     "nestjs-i18n": "^10.5.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
+    "tsx": "^4.20.3",
     "typeorm": "^0.3.25",
     "winston": "^3.17.0",
     "winston-daily-rotate-file": "^5.0.0"

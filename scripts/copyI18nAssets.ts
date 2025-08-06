@@ -1,15 +1,16 @@
-const fs = require('fs');
-const path = require('path');
-
-const sourceDir = path.join(__dirname,"..","apps/common/src/i18n");
+// const fs = require('fs');
+// const path = require('path');
+import path from 'node:path';
+import fs from 'node:fs';
+const sourceDir = path.join(__dirname, '..', 'apps/common/src/i18n');
 const outDir = path.join(__dirname, '..', 'dist/apps/common/src/i18n');
-console.log("sourceDir",sourceDir);
-console.log("outDir",outDir);
-console.log("执行了 copyAssets");
-if(!fs.existsSync(outDir)){
+console.log('sourceDir', sourceDir);
+console.log('outDir', outDir);
+console.log('执行了 copyAssets');
+if (!fs.existsSync(outDir)) {
   fs.mkdirSync(outDir);
-}else{
-  deleteFolderRecursive(outDir)
+} else {
+  deleteFolderRecursive(outDir);
   fs.mkdirSync(outDir);
 }
 function copyFileSync(source, target) {
@@ -26,14 +27,14 @@ function copyFileSync(source, target) {
 }
 
 function copyFolderRecursiveSync(source, target) {
-  let files = [];
+  let files: string[] = [];
 
   // 检查源路径是否存在
   if (fs.existsSync(source)) {
     // 读取源目录内容
     files = fs.readdirSync(source);
 
-    files.forEach(function(file) {
+    files.forEach(function (file) {
       const curSource = path.join(source, file);
 
       if (fs.lstatSync(curSource).isDirectory()) {
@@ -57,9 +58,11 @@ function deleteFolderRecursive(directoryPath) {
   if (fs.existsSync(directoryPath)) {
     fs.readdirSync(directoryPath).forEach((file, index) => {
       const curPath = path.join(directoryPath, file);
-      if (fs.lstatSync(curPath).isDirectory()) { // 如果是文件夹，递归删除
+      if (fs.lstatSync(curPath).isDirectory()) {
+        // 如果是文件夹，递归删除
         deleteFolderRecursive(curPath);
-      } else { // 如果是文件，直接删除
+      } else {
+        // 如果是文件，直接删除
         fs.unlinkSync(curPath);
       }
     });
