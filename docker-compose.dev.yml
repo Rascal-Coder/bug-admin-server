@@ -2,12 +2,12 @@ version: '3'
 
 services:
   mysql:
-    image: mysql:latest
-    container_name: nest-admin-mysql
+    image: mysql:8.4
+    container_name: bug-admin-mysql
     restart: always
     env_file:
       - .env
-      - .env.production
+      - .env.development
     environment:
       - MYSQL_HOST=${DB_HOST}
       - MYSQL_PORT=${DB_PORT}
@@ -25,12 +25,12 @@ services:
       - bug_admin_net
 
   redis:
-    image: redis:alpine
-    container_name: nest-admin-redis
+    image: redis:7.0-alpine
+    container_name: bug-admin-redis
     restart: always
     env_file:
       - .env
-      - .env.production
+      - .env.development
     ports:
       - '${REDIS_PORT}:6379'
     command: >

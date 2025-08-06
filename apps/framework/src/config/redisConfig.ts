@@ -1,8 +1,12 @@
 import { RedisModule } from '@nestjs-modules/ioredis';
-import { getConfig } from 'apps/common/src/utils/Config';
+import { env, envNumber } from 'apps/common/src/utils/Env';
 
-const { REDIS_CONFIG } = getConfig();
 export default RedisModule.forRoot({
   type: 'single',
-  options: REDIS_CONFIG,
+  options: {
+    port: envNumber('REDIS_PORT'),
+    host: env('REDIS_HOST'),
+    password: env('REDIS_PASSWORD'),
+    db: envNumber('REDIS_DB'),
+  },
 });

@@ -18,10 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/app/test/jest-e2e.json",
-    "docker:dev": "node scripts/load-config.js dev docker-compose up -d",
-    "docker:prod": "node scripts/load-config.js prod docker-compose up -d",
-    "docker:down": "docker-compose down",
-    "docker:logs": "docker-compose logs -f"
+    "docker:build:dev": "docker compose -f docker-compose.dev.yml --env-file .env --env-file .env.development up --build",
+    "docker:build": "docker compose -f docker-compose.prod.yml --env-file .env --env-file .env.production up --build"
   },
   "dependencies": {
     "@nestjs-modules/ioredis": "^2.0.2",
@@ -42,8 +40,7 @@
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.25",
     "winston": "^3.17.0",
-    "winston-daily-rotate-file": "^5.0.0",
-    "yaml": "^2.8.0"
+    "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

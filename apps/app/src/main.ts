@@ -1,10 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { getConfig } from 'apps/common/src/utils/Config';
+import { envNumber } from 'apps/common/src/utils/Env';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const { SERVER_CONFIG } = getConfig();
-  await app.listen(SERVER_CONFIG.port ?? 3000);
+  await app.listen(envNumber('APP_PORT'));
 }
 bootstrap();
