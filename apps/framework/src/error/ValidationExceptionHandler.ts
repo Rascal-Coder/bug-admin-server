@@ -6,6 +6,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { ConvertDate } from 'apps/common/src/utils/ConvertDate';
+import { isDev } from 'apps/common/src/utils/Env';
 
 export class ValidationExceptionHandler implements ExceptionHandlerInterface {
   handleException(exception: Error, host: ArgumentsHost) {
@@ -24,7 +25,7 @@ export class ValidationExceptionHandler implements ExceptionHandlerInterface {
       timestamp: new ConvertDate(new Date()).toISOString(),
       msg: Array.isArray(info.message) ? info.message.join(',') : info.message,
     };
-    if (process.env.NODE_ENV === 'development') {
+    if (isDev) {
       respObj.path = request.url;
       respObj.method = request.method;
     }

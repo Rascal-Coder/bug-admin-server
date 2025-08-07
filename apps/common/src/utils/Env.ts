@@ -5,7 +5,7 @@ export const isMainCluster =
   Number.parseInt(process.env.NODE_APP_INSTANCE) === 0;
 export const isMainProcess = cluster.isPrimary || isMainCluster;
 
-export const isDev = process.env.RUNNING_ENV === 'dev';
+export const isDev = process.env.RUNNING_ENV === 'development';
 
 export const isTest = !!process.env.TEST;
 export const cwd = process.cwd();

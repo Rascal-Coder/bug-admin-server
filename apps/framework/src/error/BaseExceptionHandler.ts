@@ -1,6 +1,7 @@
 import { ExceptionHandlerInterface } from './ExceptionHandler.interface';
 import { ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { ConvertDate } from 'apps/common/src/utils/ConvertDate';
+import { isDev } from 'apps/common/src/utils/Env';
 
 export class BaseExceptionHandler implements ExceptionHandlerInterface {
   handleException(exception: Error, host: ArgumentsHost) {
@@ -21,7 +22,7 @@ export class BaseExceptionHandler implements ExceptionHandlerInterface {
           ? (exception.getResponse() as any)?.message
           : exception.message || 'Internal server error',
     };
-    if (process.env.NODE_ENV === 'development') {
+    if (isDev) {
       respObj.path = request.url;
       respObj.method = request.method;
     }

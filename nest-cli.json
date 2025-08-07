@@ -9,7 +9,7 @@
   },
   "monorepo": true,
   "root": "apps/app/",
-  "entryFile": "app/src/main",
+  "entryFile": "main",
   "projects": {
     "app": {
       "type": "application",

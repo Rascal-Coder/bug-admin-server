@@ -6,6 +6,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConvertDate } from 'apps/common/src/utils/ConvertDate';
+import { isDev } from 'apps/common/src/utils/Env';
 
 export class UnauthorizedExceptionHandler implements ExceptionHandlerInterface {
   handleException(exception: Error, host: ArgumentsHost) {
@@ -24,7 +25,7 @@ export class UnauthorizedExceptionHandler implements ExceptionHandlerInterface {
       timestamp: new ConvertDate(new Date()).toISOString(),
       msg: info.message,
     };
-    if (process.env.NODE_ENV === 'development') {
+    if (isDev) {
       respObj.path = request.url;
       respObj.method = request.method;
     }

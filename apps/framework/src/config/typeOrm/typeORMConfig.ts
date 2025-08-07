@@ -1,21 +1,19 @@
 import { join } from 'node:path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { env, envBoolean, envNumber } from 'apps/common/src/utils/Env';
-// import { getConfig } from 'apps/common/src/utils/Config';
 
 const entitiesPaths = [
   join(__dirname, '..', '..', '..', '..', '**', '*.entity.{ts,js}'),
 ];
-console.log('DB_HOST==========================>', env('DB_HOST'));
 
 export default TypeOrmModule.forRoot({
   // ...MYSQL_CONFIG,
   type: 'mysql',
   host: env('DB_HOST'),
   port: envNumber('DB_PORT'),
-  username: env('MYSQL_USERNAME'),
-  password: env('MYSQL_PASSWORD'),
-  database: env('MYSQL_DATABASE'),
+  username: env('DB_USERNAME'),
+  password: env('DB_PASSWORD'),
+  database: env('DB_DATABASE'),
   synchronize: envBoolean('DB_SYNCHRONIZE'),
   logging: envBoolean('DB_LOGGING'),
   connectorPackage: 'mysql2',

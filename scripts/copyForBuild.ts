@@ -1,22 +1,18 @@
 import fs from 'fs';
 import path from 'node:path';
-import chalk from 'chalk';
 
-const sourceDir = path.join(__dirname, '..', 'apps/common/src/i18n');
-const outDir = path.join(__dirname, '..', 'dist/apps/common/src/i18n');
+const sourceDir1 = path.join(__dirname,"..","package.json");
+const sourceDir2 = path.join(__dirname,"..","config");
+const outDir1 = path.join(__dirname, '..', 'dist');
+const outDir2 = path.join(__dirname, '..', 'dist/config');
 
-console.log(chalk.blue('📁 源目录:'), chalk.cyan(sourceDir));
-console.log(chalk.blue('📁 输出目录:'), chalk.cyan(outDir));
-console.log(chalk.green('🚀 开始执行 copyAssets 任务...'));
-
-if (!fs.existsSync(outDir)) {
-  fs.mkdirSync(outDir, { recursive: true });
-} else {
-  deleteFolderRecursive(outDir);
-  fs.mkdirSync(outDir, { recursive: true });
+if(!fs.existsSync(outDir2)){
+  fs.mkdirSync(outDir2);
+}else{
+  deleteFolderRecursive(outDir2)
+  fs.mkdirSync(outDir2);
 }
-
-function copyFileSync(source: string, target: string): void {
+function copyFileSync(source, target) {
   let targetFile = target;
 
   // 如果目标是一个目录，则将源文件名附加到目标目录上
@@ -29,7 +25,7 @@ function copyFileSync(source: string, target: string): void {
   fs.writeFileSync(targetFile, fs.readFileSync(source));
 }
 
-function copyFolderRecursiveSync(source: string, target: string): void {
+function copyFolderRecursiveSync(source, target) {
   let files: string[] = [];
 
   // 检查源路径是否存在
@@ -37,14 +33,14 @@ function copyFolderRecursiveSync(source: string, target: string): void {
     // 读取源目录内容
     files = fs.readdirSync(source);
 
-    files.forEach(function (file) {
+    files.forEach(function(file) {
       const curSource = path.join(source, file);
 
       if (fs.lstatSync(curSource).isDirectory()) {
         // 如果是目录，则递归复制
         const curTarget = path.join(target, file);
         if (!fs.existsSync(curTarget)) {
-          fs.mkdirSync(curTarget, { recursive: true });
+          fs.mkdirSync(curTarget);
         }
         copyFolderRecursiveSync(curSource, curTarget);
       } else {
@@ -55,22 +51,19 @@ function copyFolderRecursiveSync(source: string, target: string): void {
   }
 }
 
-function deleteFolderRecursive(directoryPath: string): void {
+copyFileSync(sourceDir1, outDir1);
+copyFolderRecursiveSync(sourceDir2, outDir2);
+
+function deleteFolderRecursive(directoryPath) {
   if (fs.existsSync(directoryPath)) {
-    fs.readdirSync(directoryPath).forEach((file) => {
+    fs.readdirSync(directoryPath).forEach((file, index) => {
       const curPath = path.join(directoryPath, file);
-      if (fs.lstatSync(curPath).isDirectory()) {
-        // 如果是文件夹，递归删除
+      if (fs.lstatSync(curPath).isDirectory()) { // 如果是文件夹，递归删除
         deleteFolderRecursive(curPath);
-      } else {
-        // 如果是文件，直接删除
+      } else { // 如果是文件，直接删除
         fs.unlinkSync(curPath);
       }
     });
     fs.rmdirSync(directoryPath); // 删除空文件夹
   }
 }
-
-copyFolderRecursiveSync(sourceDir, outDir);
-
-console.log(chalk.green('🎉 copyAssets 任务执行完成！'));
